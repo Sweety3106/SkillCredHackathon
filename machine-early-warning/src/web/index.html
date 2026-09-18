@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predictive Fleet Intelligence — Industrial AI Early Warning</title>
+  <meta name="description" content="Production-grade AI-powered early warning system for industrial machine failure prediction, operational runway monitoring, and multivariate sensor telemetry.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="industrial-theme">
+  <!-- Application Layout Shell -->
+  <div class="app-container" id="app">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar" aria-label="Main Navigation">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <div class="brand-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+              <circle cx="12" cy="12" r="4"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">PREDICTIVE</span>
+            <span class="brand-subtitle">FLEET INTELLIGENCE</span>
+          </div>
+        </div>
+        <div class="brand-tagline">AI-powered early warning for machine failure</div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">OPERATIONS MONITOR</div>
+        <button class="nav-item active" data-tab="screen-risk" id="nav-risk">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+          <span class="nav-label">Risk Monitor</span>
+          <span class="nav-badge alert-badge">DEMO</span>
+        </button>
+
+        <button class="nav-item" data-tab="screen-sensors" id="nav-sensors">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
+          </svg>
+          <span class="nav-label">Sensor Analytics</span>
+        </button>
+
+        <button class="nav-item" data-tab="screen-fleet" id="nav-fleet">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <span class="nav-label">Fleet Overview</span>
+          <span class="nav-counter" id="fleet-count-badge">20</span>
+        </button>
+
+        <button class="nav-item" data-tab="screen-models" id="nav-models">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 20V10M12 20V4M6 20v-6"/>
+          </svg>
+          <span class="nav-label">Model Comparison</span>
+        </button>
+
+        <div class="nav-divider"></div>
+
+        <div class="nav-section-label">MANAGEMENT & ALERTS</div>
+        <button class="nav-item" id="btn-open-alerts">
+          <svg class="nav-icon text-amber" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span class="nav-label">Active Alerts</span>
+          <span class="nav-pill" id="sidebar-alert-pill">3 Active</span>
+        </button>
+
+        <button class="nav-item" id="btn-showcase-m48">
+          <svg class="nav-icon text-cyan" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="10 8 16 12 10 16 10 8"/>
+          </svg>
+          <span class="nav-label">Demo: Machine 48</span>
+          <span class="nav-pill pill-cyan">41c Runway</span>
+        </button>
+      </nav>
+
+      <!-- Bottom Sidebar Footer -->
+      <div class="sidebar-footer">
+        <div class="system-status-pill">
+          <span class="status-pulse-dot operational"></span>
+          <div class="status-text-block">
+            <span class="status-main">Operational</span>
+            <span class="status-sub">NASA C-MAPSS FD001</span>
+          </div>
+        </div>
+
+        <div class="sidebar-user-block">
+          <div class="user-avatar">RE</div>
+          <div class="user-info">
+            <div class="user-name">Chief Plant Engineer</div>
+            <div class="user-role">Turbofan Fleet Ops</div>
+          </div>
+        </div>
+
+        <div class="sidebar-bottom-controls">
+          <button class="btn-theme-toggle" id="theme-toggle-sidebar" title="Switch between 60% Dark and Enterprise Light mode" aria-label="Toggle Theme">
+            <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span class="theme-label" id="theme-label-sidebar">Theme</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-viewport">
+      
+      <!-- TOP HEADER BAR -->
+      <header class="top-header" id="top-header">
+        <div class="header-left">
+          <div class="header-breadcrumb" id="header-breadcrumb">
+            <span>Fleet</span> <span class="breadcrumb-sep">/</span> <span id="breadcrumb-screen">Risk Monitor</span> <span class="breadcrumb-sep">/</span> <span class="breadcrumb-highlight" id="breadcrumb-machine">M-048</span>
+          </div>
+          <div class="header-title-row">
+            <h1 class="header-page-title" id="page-title">Risk Monitor</h1>
+            <span class="header-badge-model">LSTM SEQUENCE MODEL</span>
+            <span class="header-asset-selector-wrapper">
+              <label for="machine-select" class="sr-only">Select Monitored Machine</label>
+              <select id="machine-select" class="machine-select" aria-label="Select Machine Asset">
+                <option value="48" selected>M-048 — Turbofan Core Unit #48 (ALERT)</option>
+                <!-- Dynamically populated -->
+              </select>
+            </span>
+          </div>
+          <p class="header-subtitle" id="page-subtitle">Machine failure early-warning intelligence and predictive runway analysis</p>
+        </div>
+
+        <div class="header-right">
+          <!-- Live Telemetry Badge -->
+          <div class="telemetry-live-badge">
+            <span class="pulse-indicator"></span>
+            <span class="live-label">LIVE</span>
+            <span class="telemetry-clock" id="telemetry-clock">10:42:18 AM</span>
+          </div>
+
+          <div class="freshness-indicator" id="freshness-indicator" title="Data stream refresh status">
+            Data updated 8s ago
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="header-action-buttons">
+            <button class="btn-icon" id="btn-manual-refresh" title="Refresh Telemetry Stream" aria-label="Refresh Data">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+              </svg>
+            </button>
+
+            <button class="btn-icon btn-notification" id="btn-header-alerts" title="View Active Fleet Alerts" aria-label="Notifications">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+              <span class="notification-badge" id="header-alert-count">3</span>
+            </button>
+
+            <button class="btn-icon btn-theme-quick" id="btn-theme-header" title="Toggle Dark / Light Theme" aria-label="Switch Theme">
+              <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+              <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY (SWITCHABLE SCREENS) -->
+      <div class="content-scrollable">
+
+        <!-- ================================================================ -->
+        <!-- SCREEN 2: RISK MONITOR (DEFAULT ACTIVE — CORE HACKATHON DEMO)     -->
+        <!-- ================================================================ -->
+        <section class="screen-view active" id="screen-risk" aria-label="Risk Monitor View">
+          
+          <!-- TOP KPI STRIP -->
+          <div class="kpi-strip" id="risk-kpi-strip">
+            
+            <div class="kpi-card kpi-card-risk" id="kpi-current-risk">
+              <div class="kpi-meta">
+                <span class="kpi-label">CURRENT RISK</span>
+                <span class="kpi-sublabel">Operational Threshold: 0.50</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-value text-amber" id="val-current-risk">0.782</span>
+                <span class="kpi-trend trend-up">▲ Rising</span>
+              </div>
+              <div class="kpi-bar-track">
+                <div class="kpi-bar-fill bar-amber" id="bar-risk" style="width: 78.2%;"></div>
+              </div>
+            </div>
+
+            <div class="kpi-card" id="kpi-status">
+              <div class="kpi-meta">
+                <span class="kpi-label">STATUS</span>
+                <span class="kpi-sublabel">Intervention required</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="status-indicator-badge badge-alert" id="val-status">▲ ALERT</span>
+              </div>
+              <div class="kpi-annotation">Breached at Cycle 190</div>
+            </div>
+
+            <div class="kpi-card" id="kpi-failure-prob">
+              <div class="kpi-meta">
+                <span class="kpi-label">FAILURE PROBABILITY</span>
+                <span class="kpi-sublabel">Within 30 cycles</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-value" id="val-failure-prob">78.2%</span>
+              </div>
+              <div class="kpi-annotation text-secondary">Pre-failure degradation state</div>
+            </div>
+
+            <!-- KEY DIFFERENTIATOR: PROMINENT LEAD TIME RUNWAY -->
+            <div class="kpi-card kpi-card-leadtime" id="kpi-lead-time">
+              <div class="kpi-meta">
+                <span class="kpi-label text-leadtime">AVAILABLE LEAD TIME</span>
+                <span class="kpi-badge-gold">ADVANCE RUNWAY</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-value text-gold" id="val-lead-time">41 cycles</span>
+                <span class="kpi-unit-badge" id="val-lead-time-hours">~4h 06m</span>
+              </div>
+              <div class="kpi-annotation leadtime-note">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                Window before predicted failure at Cycle 231
+              </div>
+            </div>
+
+            <div class="kpi-card" id="kpi-model">
+              <div class="kpi-meta">
+                <span class="kpi-label">AI ARCHITECTURE</span>
+                <span class="kpi-sublabel">Held-out test split</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-value font-mono" id="val-model">LSTM (2-Layer)</span>
+              </div>
+              <div class="kpi-annotation text-cyan">PR-AUC 0.9770 • 100% Caught</div>
+            </div>
+
+          </div>
+
+          <!-- MAIN RISK CHART CONTAINER -->
+          <div class="chart-panel card-surface" id="risk-chart-panel">
+            <div class="chart-panel-header">
+              <div class="chart-title-group">
+                <div class="chart-title-row">
+                  <h2 class="chart-title">Risk Over Time</h2>
+                  <span class="chart-tag">Predicted machine failure trajectory</span>
+                </div>
+                <p class="chart-narrative">
+                  Continuous multivariate probability curve tracking engine degradation toward failure runway.
+                </p>
+              </div>
+
+              <!-- Interactive Chart Legend -->
+              <div class="chart-legend-row" aria-label="Chart Legend">
+                <div class="legend-item">
+                  <span class="legend-swatch line-risk"></span>
+                  <span class="legend-text">Predicted Risk</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-swatch line-threshold"></span>
+                  <span class="legend-text">Threshold (0.50)</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-swatch line-alert"></span>
+                  <span class="legend-text">ALERT (Cycle 190)</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-swatch line-failure"></span>
+                  <span class="legend-text">FAILURE (Cycle 231)</span>
+                </div>
+                <div class="legend-item legend-leadtime">
+                  <span class="legend-swatch fill-leadtime"></span>
+                  <span class="legend-text font-bold">AVAILABLE LEAD TIME (41c)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Canvas Container with Pixel-Perfect Aspect Ratio -->
+            <div class="canvas-wrapper" id="risk-canvas-wrapper">
+              <canvas id="risk-chart-canvas" width="1200" height="380" aria-label="Risk Trajectory Chart"></canvas>
+              <div class="chart-tooltip" id="risk-tooltip" style="display: none;"></div>
+            </div>
+
+            <!-- Shaded Region Visual Highlights Callout -->
+            <div class="chart-footer-strip">
+              <div class="footer-callout">
+                <span class="callout-icon">💡</span>
+                <span class="callout-text">
+                  <strong>Operational Insight:</strong> The system triggered an advance warning alert at <strong>Cycle 190</strong>. Maintenance crews receive <strong>41 cycles of advance warning (~4h 06m)</strong> to schedule an inspection before catastrophic breakdown at <strong>Cycle 231</strong>.
+                </span>
+              </div>
+              <div class="footer-actions">
+                <button class="btn-subtle" id="btn-zoom-leadtime">Focus Lead-Time Window</button>
+                <button class="btn-subtle" id="btn-reset-zoom">Reset Zoom</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTEGRATED SCREEN 3: SENSOR ANALYTICS (SYNCHRONIZED DIRECTLY BELOW) -->
+          <div class="sensor-section-header">
+            <div class="section-title-group">
+              <h3 class="section-title">Associated Sensor Signals (Non-Causal Telemetry Trace)</h3>
+              <p class="section-subtitle">Top 4 physical degradation drivers sharing the exact same operating cycle time-axis</p>
+            </div>
+            <div class="sensor-sync-badge">
+              <span class="sync-icon">⚡</span>
+              <span>SYNCHRONIZED TIME AXIS (Cycles 30 → 231)</span>
+            </div>
+          </div>
+
+          <!-- 4 Synchronized Sensor Cards -->
+          <div class="sensor-grid-2x2" id="sensor-grid">
+            
+            <!-- Sensor 11: Static Pressure at HPC -->
+            <div class="sensor-card card-surface" id="sensor-card-11" data-sensor="sensor_11">
+              <div class="sensor-card-header">
+                <div class="sensor-meta">
+                  <span class="sensor-id">SENSOR 11</span>
+                  <span class="sensor-name">Static Pressure at HPC</span>
+                </div>
+                <div class="sensor-reading-group">
+                  <span class="sensor-value text-amber" id="s11-val">48.24</span>
+                  <span class="sensor-unit">psia</span>
+                  <span class="sensor-status-badge badge-elevated" id="s11-status">▲ +8.2% ELEVATED</span>
+                </div>
+              </div>
+              <div class="sensor-canvas-wrapper">
+                <canvas id="sensor-canvas-11" width="580" height="150"></canvas>
+              </div>
+              <div class="sensor-footer">
+                <span class="sensor-spec">Nominal: 46.9 - 47.3 psia</span>
+                <span class="sensor-drift-note">Drift began: ~Cycle 185</span>
+              </div>
+            </div>
+
+            <!-- Sensor 9: Physical Core Speed -->
+            <div class="sensor-card card-surface" id="sensor-card-9" data-sensor="sensor_9">
+              <div class="sensor-card-header">
+                <div class="sensor-meta">
+                  <span class="sensor-id">SENSOR 9</span>
+                  <span class="sensor-name">Physical Core Speed (N2)</span>
+                </div>
+                <div class="sensor-reading-group">
+                  <span class="sensor-value text-amber" id="s9-val">9094.2</span>
+                  <span class="sensor-unit">rpm</span>
+                  <span class="sensor-status-badge badge-elevated" id="s9-status">▲ +0.5% ELEVATED</span>
+                </div>
+              </div>
+              <div class="sensor-canvas-wrapper">
+                <canvas id="sensor-canvas-9" width="580" height="150"></canvas>
+              </div>
+              <div class="sensor-footer">
+                <span class="sensor-spec">Nominal: 9040 - 9060 rpm</span>
+                <span class="sensor-drift-note">Thermal compensation drift</span>
+              </div>
+            </div>
+
+            <!-- Sensor 12: Fuel Flow Ratio -->
+            <div class="sensor-card card-surface" id="sensor-card-12" data-sensor="sensor_12">
+              <div class="sensor-card-header">
+                <div class="sensor-meta">
+                  <span class="sensor-id">SENSOR 12</span>
+                  <span class="sensor-name">Ratio of Fuel Flow to Ps30</span>
+                </div>
+                <div class="sensor-reading-group">
+                  <span class="sensor-value text-cyan" id="s12-val">519.82</span>
+                  <span class="sensor-unit">pps/psi</span>
+                  <span class="sensor-status-badge badge-drift" id="s12-status">▼ -0.4% DEVIATING</span>
+                </div>
+              </div>
+              <div class="sensor-canvas-wrapper">
+                <canvas id="sensor-canvas-12" width="580" height="150"></canvas>
+              </div>
+              <div class="sensor-footer">
+                <span class="sensor-spec">Nominal: 521.0 - 522.5 pps/psi</span>
+                <span class="sensor-drift-note">Combustion divergence</span>
+              </div>
+            </div>
+
+            <!-- Sensor 14: Corrected Core Speed -->
+            <div class="sensor-card card-surface" id="sensor-card-14" data-sensor="sensor_14">
+              <div class="sensor-card-header">
+                <div class="sensor-meta">
+                  <span class="sensor-id">SENSOR 14</span>
+                  <span class="sensor-name">Corrected Core Speed</span>
+                </div>
+                <div class="sensor-reading-group">
+                  <span class="sensor-value text-amber" id="s14-val">8162.8</span>
+                  <span class="sensor-unit">rpm</span>
+                  <span class="sensor-status-badge badge-elevated" id="s14-status">▲ +0.4% ELEVATED</span>
+                </div>
+              </div>
+              <div class="sensor-canvas-wrapper">
+                <canvas id="sensor-canvas-14" width="580" height="150"></canvas>
+              </div>
+              <div class="sensor-footer">
+                <span class="sensor-spec">Nominal: 8120 - 8145 rpm</span>
+                <span class="sensor-drift-note">High-altitude aero drift</span>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================================ -->
+        <!-- SCREEN 1: FLEET OVERVIEW                                          -->
+        <!-- ================================================================ -->
+        <section class="screen-view" id="screen-fleet" aria-label="Fleet Overview View">
+          
+          <!-- FLEET KPI ROW -->
+          <div class="kpi-strip" id="fleet-kpi-strip">
+            
+            <div class="kpi-card">
+              <div class="kpi-meta">
+                <span class="kpi-label">TOTAL MONITORED ASSETS</span>
+                <span class="kpi-sublabel">NASA C-MAPSS Test Fleet</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-value" id="kpi-fleet-total">20</span>
+                <span class="kpi-unit-badge">Turbofans</span>
+              </div>
+              <div class="kpi-annotation text-secondary">Zero-leakage machine split</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-meta">
+                <span class="kpi-label">HEALTHY MACHINES</span>
+                <span class="kpi-sublabel">Risk &lt; 0.50 Threshold</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-value text-green" id="kpi-fleet-healthy">7</span>
+                <span class="status-dot healthy"></span>
+              </div>
+              <div class="kpi-annotation text-green">● Stable operation</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-meta">
+                <span class="kpi-label">AT RISK (ALERT)</span>
+                <span class="kpi-sublabel">Intervention runway active</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-value text-amber" id="kpi-fleet-alert">7</span>
+                <span class="status-dot alert"></span>
+              </div>
+              <div class="kpi-annotation text-amber">▲ Warning runway open</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-meta">
+                <span class="kpi-label">CRITICAL</span>
+                <span class="kpi-sublabel">Risk &gt; 0.85 Urgency</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-value text-red" id="kpi-fleet-critical">6</span>
+                <span class="status-dot critical"></span>
+              </div>
+              <div class="kpi-annotation text-red">● Immediate maintenance dispatch</div>
+            </div>
+
+            <div class="kpi-card kpi-card-leadtime">
+              <div class="kpi-meta">
+                <span class="kpi-label text-leadtime">FLEET MEAN LEAD TIME</span>
+                <span class="kpi-badge-gold">35.95 CYCLES</span>
+              </div>
+              <div class="kpi-value-row">
+                <span class="kpi-value text-gold" id="kpi-fleet-leadtime">36.0c</span>
+                <span class="kpi-unit-badge">~3.6h runway</span>
+              </div>
+              <div class="kpi-annotation leadtime-note">20 / 20 (100%) Machines Caught</div>
+            </div>
+
+          </div>
+
+          <!-- FLEET TABLE CONTROLS & SEARCH -->
+          <div class="fleet-table-container card-surface">
+            <div class="fleet-table-header">
+              <div class="table-header-left">
+                <h3 class="table-title">Fleet Asset Telemetry Directory</h3>
+                <span class="table-counter" id="table-filtered-counter">Showing 20 of 20 machines</span>
+              </div>
+              <div class="table-header-right">
+                <div class="search-input-wrapper">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                  <input type="text" id="fleet-search-input" placeholder="Search machine, component, or status..." aria-label="Search Fleet">
+                </div>
+                <div class="filter-pill-group">
+                  <button class="filter-btn active" data-filter="all">All (20)</button>
+                  <button class="filter-btn" data-filter="alert">At Risk (7)</button>
+                  <button class="filter-btn" data-filter="critical">Critical (6)</button>
+                  <button class="filter-btn" data-filter="healthy">Healthy (7)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scrollable Table -->
+            <div class="table-responsive">
+              <table class="fleet-table" id="fleet-table" aria-label="Fleet Assets Table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="th-rank">Rank</th>
+                    <th scope="col" class="th-machine">Machine Asset</th>
+                    <th scope="col" class="th-location">Plant / Cell</th>
+                    <th scope="col" class="th-risk">Risk Score</th>
+                    <th scope="col" class="th-prob">Failure Prob.</th>
+                    <th scope="col" class="th-status">Status</th>
+                    <th scope="col" class="th-leadtime">Lead Time Runway</th>
+                    <th scope="col" class="th-trend">Trend</th>
+                    <th scope="col" class="th-action">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="fleet-table-body">
+                  <!-- Dynamically rendered rows -->
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="table-footer-note">
+              <span>* Machines sorted by priority urgency rank. Click any machine row to immediately inspect its complete failure trajectory and sensor traces.</span>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ================================================================ -->
+        <!-- SCREEN 3: DEDICATED SENSOR ANALYTICS DEEP DIVE                   -->
+        <!-- ================================================================ -->
+        <section class="screen-view" id="screen-sensors" aria-label="Sensor Analytics View">
+          <div class="sensor-deep-dive-panel card-surface">
+            <div class="deep-dive-header">
+              <div>
+                <h2 class="section-title">Multivariate Aero-Thermal Sensor Suite</h2>
+                <p class="section-subtitle">Real physical sensor channels from NASA C-MAPSS FD001 demonstrating micro-vibration, pressure drift, and thermal divergences</p>
+              </div>
+              <div class="deep-dive-actions">
+                <span class="badge-asset-inspect" id="sensor-active-machine-badge">Inspecting: M-048 (Cycle 198)</span>
+              </div>
+            </div>
+
+            <div class="sensor-physics-cards">
+              <div class="physics-card">
+                <div class="physics-header">
+                  <span class="physics-num">01</span>
+                  <h4>Compressor Aerodynamics</h4>
+                </div>
+                <p>Sensor 11 (Static Pressure at HPC) measures internal stage load. Degradation creates aerodynamic boundary layer separation, driving static pressure upward 35+ cycles before catastrophic blade stall.</p>
+              </div>
+              <div class="physics-card">
+                <div class="physics-header">
+                  <span class="physics-num">02</span>
+                  <h4>Spool Kinematics</h4>
+                </div>
+                <p>Sensor 9 (Core Speed N2) and Sensor 14 (Corrected Core Speed) track mechanical rotational speeds. As turbine efficiency degrades, the engine controller demands higher core RPM to maintain commanded thrust.</p>
+              </div>
+              <div class="physics-card">
+                <div class="physics-header">
+                  <span class="physics-num">03</span>
+                  <h4>Fuel-Air Metering</h4>
+                </div>
+                <p>Sensor 12 (Fuel Flow Ratio to Ps30) captures fuel metering deviation under thermal wear. Divergence highlights combustion thermal degradation without requiring invasive borescope inspection.</p>
+              </div>
+            </div>
+
+            <!-- Embedded High-Resolution Sensor Chart Deck -->
+            <div class="sensor-full-charts-container" id="sensor-full-charts">
+              <!-- Re-uses synchronous 4-chart engine -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================================================================ -->
+        <!-- SCREEN 4: MODEL COMPARISON & PERFORMANCE                         -->
+        <!-- ================================================================ -->
+        <section class="screen-view" id="screen-models" aria-label="Model Comparison View">
+          
+          <div class="model-comp-header-panel card-surface">
+            <div class="model-title-row">
+              <div>
+                <h2 class="section-title">Model Performance & Evaluation Suite</h2>
+                <p class="section-subtitle">Rigorous head-to-head benchmarking on 3,661 held-out test windows across 20 unseen NASA engines</p>
+              </div>
+              <div class="model-kpi-pill">
+                <span class="pill-label">OPERATING THRESHOLD:</span>
+                <span class="pill-val">τ = 0.50</span>
+              </div>
+            </div>
+
+            <!-- Comparison Table: Baseline vs LSTM -->
+            <div class="table-responsive">
+              <table class="model-comparison-table" id="model-comparison-table" aria-label="Model Comparison Table">
+                <thead>
+                  <tr>
+                    <th scope="col">Evaluation Metric</th>
+                    <th scope="col">Baseline (GBDT)</th>
+                    <th scope="col">LSTM Sequence Model</th>
+                    <th scope="col">Operational Advantage</th>
+                    <th scope="col">Engineering Significance</th>
+                  </tr>
+                </thead>
+                <tbody id="model-comparison-tbody">
+                  <!-- Dynamically rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 17-Point Threshold Sweep & Confusion Matrix Grid -->
+          <div class="model-analytics-grid">
+            
+            <!-- Threshold Sweep Chart -->
+            <div class="card-surface sweep-card" id="sweep-chart-card">
+              <div class="card-title-row">
+                <div>
+                  <h3 class="card-title">17-Point Operational Threshold Sweep</h3>
+                  <p class="card-subtitle">Precision, Recall, and Mean Lead Time sensitivity analysis (τ: 0.10 → 0.90)</p>
+                </div>
+                <span class="badge-optimal">Optimal τ = 0.50</span>
+              </div>
+              <div class="canvas-wrapper sweep-canvas-wrapper">
+                <canvas id="sweep-chart-canvas" width="600" height="300"></canvas>
+              </div>
+              <div class="card-caption">
+                At threshold <strong>0.50</strong>, the system catches <strong>100% of failing engines</strong> with <strong>0.0% machine false alarms</strong> and an average warning lead time of <strong>35.95 cycles</strong>.
+              </div>
+            </div>
+
+            <!-- Confusion Matrix & Cost Model -->
+            <div class="card-surface matrix-card" id="matrix-card">
+              <div class="card-title-row">
+                <div>
+                  <h3 class="card-title">Confusion Matrix (Held-Out Test Split @ 0.50)</h3>
+                  <p class="card-subtitle">3,661 test windows (16.9% positive pre-failure class prevalence)</p>
+                </div>
+              </div>
+
+              <!-- 2x2 Matrix Graphic -->
+              <div class="confusion-grid">
+                <div class="cm-cell cell-tn">
+                  <span class="cm-tag">TRUE NORMAL (TN)</span>
+                  <span class="cm-value">2,912</span>
+                  <span class="cm-pct">79.5% of windows</span>
+                  <span class="cm-desc">Correctly identified healthy operation</span>
+                </div>
+                <div class="cm-cell cell-fp">
+                  <span class="cm-tag">FALSE ALERT (FP)</span>
+                  <span class="cm-value text-amber">129</span>
+                  <span class="cm-pct">3.5% window FAR</span>
+                  <span class="cm-desc">Early warnings outside 30c horizon</span>
+                </div>
+                <div class="cm-cell cell-fn">
+                  <span class="cm-tag">MISSED PRE-FAIL (FN)</span>
+                  <span class="cm-value text-red">28</span>
+                  <span class="cm-pct">0.8% of windows</span>
+                  <span class="cm-desc">Non-critical brief transient drops</span>
+                </div>
+                <div class="cm-cell cell-tp">
+                  <span class="cm-tag">TRUE WARNING (TP)</span>
+                  <span class="cm-value text-green">592</span>
+                  <span class="cm-pct">16.2% of windows</span>
+                  <span class="cm-desc">Confirmed pre-failure alerts</span>
+                </div>
+              </div>
+
+              <!-- Operational Bonus Features Highlights -->
+              <div class="bonus-features-row">
+                <div class="bonus-item">
+                  <div class="bonus-title">Alert Deduplication (Bonus Feature 1)</div>
+                  <div class="bonus-metric text-cyan">88.1% Fatigue Reduction</div>
+                  <p class="bonus-text">Intelligent 15-cycle cooldown filter reduces alerts per failing machine from <strong>36.0 to 4.3</strong>, delivering actionable notifications to maintenance staff.</p>
+                </div>
+                <div class="bonus-item">
+                  <div class="bonus-title">Financial Cost Model (Bonus Feature 5)</div>
+                  <div class="bonus-metric text-green">₹8,600 Optimal Risk</div>
+                  <p class="bonus-text">Modeled on ₹5,000 technician inspection vs. ₹200,000 catastrophic plant downtime. Evaluates total economic risk across all thresholds.</p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ACTIVE ALERTS SLIDE-OUT DRAWER -->
+    <div class="alerts-drawer-overlay" id="alerts-overlay"></div>
+    <aside class="alerts-drawer" id="alerts-drawer" aria-label="Active Alerts Drawer">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <div class="drawer-title-row">
+            <svg class="text-amber" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            </svg>
+            <h3 class="drawer-title">Active Fleet Alerts</h3>
+          </div>
+          <span class="drawer-subtitle">Prioritized machine intervention tickets</span>
+        </div>
+        <button class="btn-close-drawer" id="btn-close-alerts" aria-label="Close Alerts Drawer">&times;</button>
+      </div>
+
+      <div class="drawer-body" id="drawer-alerts-list">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="drawer-footer">
+        <button class="btn-primary-action" id="btn-ack-all">Acknowledge Active Alerts</button>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="charts.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
