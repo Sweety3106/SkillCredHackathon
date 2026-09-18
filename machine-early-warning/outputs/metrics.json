@@ -1,0 +1,250 @@
+{
+  "dataset": "FD001",
+  "window_size": 30,
+  "prediction_horizon": 30,
+  "selected_threshold": 0.5,
+  "evaluation_split": "test",
+  "models": {
+    "baseline": {
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714285714285714,
+      "pr_auc": null,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time_cycles": 49.0,
+      "median_lead_time_cycles": 49.0,
+      "min_lead_time_cycles": 49.0,
+      "max_lead_time_cycles": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0,
+      "total_failing_machines": 1,
+      "confusion_matrix": [
+        [
+          0,
+          0
+        ],
+        [
+          30,
+          20
+        ]
+      ]
+    },
+    "lstm": {
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666,
+      "pr_auc": null,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time_cycles": 49.0,
+      "median_lead_time_cycles": 49.0,
+      "min_lead_time_cycles": 49.0,
+      "max_lead_time_cycles": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0,
+      "total_failing_machines": 1,
+      "confusion_matrix": [
+        [
+          0,
+          0
+        ],
+        [
+          25,
+          25
+        ]
+      ]
+    }
+  },
+  "threshold_sweep": [
+    {
+      "threshold": 0.1,
+      "precision": 1.0,
+      "recall": 0.76,
+      "f1": 0.8636,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.15,
+      "precision": 1.0,
+      "recall": 0.74,
+      "f1": 0.8506,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.2,
+      "precision": 1.0,
+      "recall": 0.68,
+      "f1": 0.8095,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.25,
+      "precision": 1.0,
+      "recall": 0.66,
+      "f1": 0.7952,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.3,
+      "precision": 1.0,
+      "recall": 0.6,
+      "f1": 0.75,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.35,
+      "precision": 1.0,
+      "recall": 0.56,
+      "f1": 0.7179,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.4,
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6667,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.45,
+      "precision": 1.0,
+      "recall": 0.48,
+      "f1": 0.6486,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.5,
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.55,
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1": 0.5714,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.6,
+      "precision": 1.0,
+      "recall": 0.36,
+      "f1": 0.5294,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.65,
+      "precision": 1.0,
+      "recall": 0.36,
+      "f1": 0.5294,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.7,
+      "precision": 1.0,
+      "recall": 0.32,
+      "f1": 0.4848,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.75,
+      "precision": 1.0,
+      "recall": 0.28,
+      "f1": 0.4375,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.8,
+      "precision": 1.0,
+      "recall": 0.28,
+      "f1": 0.4375,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.85,
+      "precision": 1.0,
+      "recall": 0.24,
+      "f1": 0.3871,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    },
+    {
+      "threshold": 0.9,
+      "precision": 1.0,
+      "recall": 0.14,
+      "f1": 0.2456,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time": 49.0,
+      "machines_caught": 1,
+      "machines_missed": 0
+    }
+  ],
+  "leakage_audit": {
+    "rul_feature_leakage": "PASS",
+    "machine_split_leakage": "PASS",
+    "test_only_evaluation": "PASS",
+    "temporal_window_leakage": "NOT VERIFIABLE",
+    "threshold_leakage": "PASS (Locked default or tuned on validation split)",
+    "scaler_split_leakage": "NOT VERIFIABLE (Scaler artifact metadata not exported)"
+  },
+  "per_machine": [
+    {
+      "machine_id": 3,
+      "actual_failure_cycle": 79.0,
+      "first_alert_cycle": 30.0,
+      "lead_time": 49.0,
+      "caught": true,
+      "false_alarm": false,
+      "max_risk": 0.9859912625386941,
+      "threshold": 0.5,
+      "status": "CAUGHT"
+    }
+  ]
+}

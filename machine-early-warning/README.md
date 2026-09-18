@@ -1,51 +1,46 @@
-# Machine Failure Early-Warning System
+# Machine Failure Early Warning System
+
+Predictive-maintenance pipeline for NASA C-MAPSS turbofan engines. It converts
+run-to-failure sensor trajectories into 30-cycle windows, predicts imminent
+failure, and reports operational lead-time metrics.
 
 ## LSTM sequence model
 
-`src/train_lstm.py` trains the ICD-specified sequence classifier directly on
-the raw `(windows, 30, 21)` sensor windows.  It expects the window handoff
-files produced by `src.windowing`:
+`src/train_lstm.py` trains the ICD-specified sequence model directly on raw
+`(N, 30, 21)` sensor windows. Train/test separation and the validation split
+are both performed **by engine**, preventing overlapping-window leakage.
 
-- `data/interim/windows.npz`, containing `X` and `y`.
-- `data/interim/window_index.parquet`, containing the matching `window_id`,
-  `machine_id`, `label`, and machine-level `split` columns.
+The model standardizes every sensor using training-only statistics, then uses
+BatchNormalization, LSTM(64), dropout, LSTM(32), dropout, Dense(16), and a
+sigmoid risk output. It uses balanced class weights and early-stops on
+validation PR-AUC.
 
-From the project directory, install dependencies and run:
+## Data and training
+
+The supplied C-MAPSS source files are expected in `CMaps/`. FD001 is the
+default because its 100 training trajectories run through known failure cycles.
 
 ```bash
 pip install -r requirements.txt
-python -m src.train_lstm
-```
-
-The trainer refuses invalid handoffs, including row-count mismatches, label
-mismatches, non-finite sensor values, and machines appearing in both train and
-test. It creates a validation set by **machine**, fits per-sensor normalization
-only on training readings, uses balanced class weights, and early-stops on
-validation PR-AUC.
-
-Artifacts:
-
-- `models/lstm.keras` - best LSTM checkpoint.
-- `models/scaler.joblib` - train-only per-sensor mean and scale used at serving.
-- `models/lstm_training_info.json` - run metadata and best validation PR-AUC.
-- `outputs/predictions.parquet` - `risk_lstm` aligned by `window_id`, while
-  preserving a pre-existing `risk_baseline` column.
-
-## Supplied C-MAPSS dataset
-
-The supplied archive is unpacked to `CMaps/`. The default dataset is NASA
-C-MAPSS **FD001**: 100 run-to-failure engine trajectories under one operating
-condition and one fault mode. `train_FD001.txt` is intentionally used instead
-of `test_FD001.txt`, because each training trajectory has a known final failure
-cycle. The loader derives `rul` and `failure_event` from that cycle.
-
-Run the complete LSTM data path from the project directory:
-
-```bash
 python -m src.data_load --dataset FD001
 python -m src.windowing
 python -m src.train_lstm
 ```
 
-This produces an 80/20 train/test split **by engine**, then a machine-level
-validation subset within training. No engine occurs in more than one split.
+The LSTM path produces raw/window artifacts, `models/lstm.keras`,
+`models/scaler.joblib`, `models/lstm_training_info.json`, and
+`outputs/predictions.parquet` with `risk_lstm`.
+
+## Evaluation
+
+Evaluation runs on held-out test engines and reports precision, recall, F1,
+PR-AUC, ROC-AUC, machine-level false-alarm rate, and early-warning lead time.
+A threshold sweep from 0.10 to 0.90 supports practical operating decisions.
+
+```bash
+python -m src.evaluate
+python -m pytest tests/test_evaluate.py -v
+```
+
+Evaluation artifacts include `outputs/metrics.json`, per-machine and threshold
+CSV reports, and plots under `outputs/figures/`.
