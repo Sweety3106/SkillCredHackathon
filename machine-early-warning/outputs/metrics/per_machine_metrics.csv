@@ -1,0 +1,2 @@
+machine_id,actual_failure_cycle,first_alert_cycle,lead_time,caught,false_alarm,max_risk,threshold,status
+3,79.0,30.0,49.0,True,False,0.9909884704231042,0.5,CAUGHT
