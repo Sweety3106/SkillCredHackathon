@@ -1,228 +1,429 @@
 {
+  "threshold": 0.5,
+  "horizon": 30,
+  "models": {
+    "lstm": {
+      "precision": 0.8210818307905686,
+      "recall": 0.9548387096774194,
+      "f1": 0.8829231916480239,
+      "roc_auc": 0.9945550593501713,
+      "pr_auc": 0.9769524276944415,
+      "false_alarm_rate": 0.0,
+      "mean_lead_time_cycles": 35.95,
+      "median_lead_time_cycles": 32.5,
+      "min_lead_time_cycles": 23.0,
+      "max_lead_time_cycles": 60.0,
+      "machines_caught": 20,
+      "machines_missed": 0,
+      "total_failing_machines": 20,
+      "confusion_matrix": [
+        [
+          2912,
+          129
+        ],
+        [
+          28,
+          592
+        ]
+      ]
+    },
+    "baseline": {
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "roc_auc": null,
+      "pr_auc": null,
+      "false_alarm_rate": null,
+      "mean_lead_time_cycles": null,
+      "machines_caught": 0,
+      "machines_missed": 0,
+      "total_failing_machines": 20,
+      "confusion_matrix": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "status": "pending_p2_baseline"
+    }
+  },
+  "per_machine": [
+    {
+      "machine_id": 8,
+      "alert_cycle": 123,
+      "failure_cycle": 150,
+      "lead_time": 27.0,
+      "caught": true,
+      "max_risk": 0.996661365032196,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 9,
+      "alert_cycle": 169,
+      "failure_cycle": 201,
+      "lead_time": 32.0,
+      "caught": true,
+      "max_risk": 0.996200680732727,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 13,
+      "alert_cycle": 137,
+      "failure_cycle": 163,
+      "lead_time": 26.0,
+      "caught": true,
+      "max_risk": 0.9966976642608643,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 18,
+      "alert_cycle": 163,
+      "failure_cycle": 195,
+      "lead_time": 32.0,
+      "caught": true,
+      "max_risk": 0.9963804483413696,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 37,
+      "alert_cycle": 143,
+      "failure_cycle": 170,
+      "lead_time": 27.0,
+      "caught": true,
+      "max_risk": 0.9965410232543945,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 46,
+      "alert_cycle": 218,
+      "failure_cycle": 256,
+      "lead_time": 38.0,
+      "caught": true,
+      "max_risk": 0.996688723564148,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 48,
+      "alert_cycle": 190,
+      "failure_cycle": 231,
+      "lead_time": 41.0,
+      "caught": true,
+      "max_risk": 0.9962500333786011,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 50,
+      "alert_cycle": 163,
+      "failure_cycle": 198,
+      "lead_time": 35.0,
+      "caught": true,
+      "max_risk": 0.9966832399368286,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 55,
+      "alert_cycle": 162,
+      "failure_cycle": 193,
+      "lead_time": 31.0,
+      "caught": true,
+      "max_risk": 0.9965482950210571,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 62,
+      "alert_cycle": 147,
+      "failure_cycle": 180,
+      "lead_time": 33.0,
+      "caught": true,
+      "max_risk": 0.99660724401474,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 64,
+      "alert_cycle": 223,
+      "failure_cycle": 283,
+      "lead_time": 60.0,
+      "caught": true,
+      "max_risk": 0.9968777298927307,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 69,
+      "alert_cycle": 316,
+      "failure_cycle": 362,
+      "lead_time": 46.0,
+      "caught": true,
+      "max_risk": 0.9967740178108215,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 72,
+      "alert_cycle": 168,
+      "failure_cycle": 213,
+      "lead_time": 45.0,
+      "caught": true,
+      "max_risk": 0.9963844418525696,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 74,
+      "alert_cycle": 140,
+      "failure_cycle": 166,
+      "lead_time": 26.0,
+      "caught": true,
+      "max_risk": 0.9966167211532593,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 76,
+      "alert_cycle": 167,
+      "failure_cycle": 210,
+      "lead_time": 43.0,
+      "caught": true,
+      "max_risk": 0.996715784072876,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 84,
+      "alert_cycle": 210,
+      "failure_cycle": 267,
+      "lead_time": 57.0,
+      "caught": true,
+      "max_risk": 0.9968076348304749,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 85,
+      "alert_cycle": 159,
+      "failure_cycle": 188,
+      "lead_time": 29.0,
+      "caught": true,
+      "max_risk": 0.9966473579406738,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 87,
+      "alert_cycle": 151,
+      "failure_cycle": 178,
+      "lead_time": 27.0,
+      "caught": true,
+      "max_risk": 0.9966309666633606,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 90,
+      "alert_cycle": 131,
+      "failure_cycle": 154,
+      "lead_time": 23.0,
+      "caught": true,
+      "max_risk": 0.996225893497467,
+      "status": "CAUGHT"
+    },
+    {
+      "machine_id": 95,
+      "alert_cycle": 242,
+      "failure_cycle": 283,
+      "lead_time": 41.0,
+      "caught": true,
+      "max_risk": 0.996621310710907,
+      "status": "CAUGHT"
+    }
+  ],
+  "alert_deduplication": {
+    "cooldown_cycles": 15,
+    "jump_threshold": 0.15,
+    "total_raw_alerts": 721,
+    "total_dedup_alerts": 86,
+    "avg_raw_per_machine": 36.0,
+    "avg_dedup_per_machine": 4.3,
+    "alert_reduction_pct": 88.1,
+    "headline": "Alerts per machine dropped from 36.0 to 4.3 (88.1% reduction)."
+  },
+  "cost_model": {
+    "cost_inspection_inr": 5000.0,
+    "cost_unplanned_failure_inr": 200000.0,
+    "cost_optimal_threshold": 0.9,
+    "min_total_cost_inr": 8599.999999999996,
+    "justification": "At threshold 0.90, total operating cost is minimized (\u20b98,600). Missed failures cost \u20b9200,000 each, whereas inspections cost \u20b95,000."
+  },
   "dataset": "FD001",
   "window_size": 30,
   "prediction_horizon": 30,
   "selected_threshold": 0.5,
   "evaluation_split": "test",
-  "models": {
-    "baseline": {
-      "precision": 1.0,
-      "recall": 0.4,
-      "f1": 0.5714285714285714,
-      "pr_auc": null,
-      "false_alarm_rate": 0.0,
-      "mean_lead_time_cycles": 49.0,
-      "median_lead_time_cycles": 49.0,
-      "min_lead_time_cycles": 49.0,
-      "max_lead_time_cycles": 49.0,
-      "machines_caught": 1,
-      "machines_missed": 0,
-      "total_failing_machines": 1,
-      "confusion_matrix": [
-        [
-          0,
-          0
-        ],
-        [
-          30,
-          20
-        ]
-      ]
-    },
-    "lstm": {
-      "precision": 1.0,
-      "recall": 0.5,
-      "f1": 0.6666666666666666,
-      "pr_auc": null,
-      "false_alarm_rate": 0.0,
-      "mean_lead_time_cycles": 49.0,
-      "median_lead_time_cycles": 49.0,
-      "min_lead_time_cycles": 49.0,
-      "max_lead_time_cycles": 49.0,
-      "machines_caught": 1,
-      "machines_missed": 0,
-      "total_failing_machines": 1,
-      "confusion_matrix": [
-        [
-          0,
-          0
-        ],
-        [
-          25,
-          25
-        ]
-      ]
-    }
-  },
   "threshold_sweep": [
     {
       "threshold": 0.1,
-      "precision": 1.0,
-      "recall": 0.76,
-      "f1": 0.8636,
+      "precision": 0.691,
+      "recall": 0.9919,
+      "f1": 0.8146,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 45.5,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.15,
-      "precision": 1.0,
-      "recall": 0.74,
-      "f1": 0.8506,
+      "precision": 0.7163,
+      "recall": 0.9855,
+      "f1": 0.8296,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 44.2,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.2,
-      "precision": 1.0,
-      "recall": 0.68,
-      "f1": 0.8095,
+      "precision": 0.7397,
+      "recall": 0.9806,
+      "f1": 0.8433,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 42.3,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.25,
-      "precision": 1.0,
-      "recall": 0.66,
-      "f1": 0.7952,
+      "precision": 0.7559,
+      "recall": 0.979,
+      "f1": 0.8531,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 40.35,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.3,
-      "precision": 1.0,
-      "recall": 0.6,
-      "f1": 0.75,
+      "precision": 0.769,
+      "recall": 0.9774,
+      "f1": 0.8608,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 39.25,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.35,
-      "precision": 1.0,
-      "recall": 0.56,
-      "f1": 0.7179,
+      "precision": 0.7811,
+      "recall": 0.9726,
+      "f1": 0.8664,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 38.55,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.4,
-      "precision": 1.0,
-      "recall": 0.5,
-      "f1": 0.6667,
+      "precision": 0.7879,
+      "recall": 0.9645,
+      "f1": 0.8673,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 37.25,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.45,
-      "precision": 1.0,
-      "recall": 0.48,
-      "f1": 0.6486,
+      "precision": 0.8147,
+      "recall": 0.9645,
+      "f1": 0.8833,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 36.45,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.5,
-      "precision": 1.0,
-      "recall": 0.4,
-      "f1": 0.5714,
+      "precision": 0.8211,
+      "recall": 0.9548,
+      "f1": 0.8829,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 35.95,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.55,
-      "precision": 1.0,
-      "recall": 0.4,
-      "f1": 0.5714,
+      "precision": 0.8453,
+      "recall": 0.9516,
+      "f1": 0.8953,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 35.45,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.6,
-      "precision": 1.0,
-      "recall": 0.36,
-      "f1": 0.5294,
+      "precision": 0.8663,
+      "recall": 0.9403,
+      "f1": 0.9018,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 34.9,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.65,
-      "precision": 1.0,
-      "recall": 0.36,
-      "f1": 0.5294,
+      "precision": 0.886,
+      "recall": 0.9274,
+      "f1": 0.9062,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 33.95,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.7,
-      "precision": 1.0,
-      "recall": 0.32,
-      "f1": 0.4848,
+      "precision": 0.9079,
+      "recall": 0.9226,
+      "f1": 0.9152,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 33.4,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.75,
-      "precision": 1.0,
-      "recall": 0.28,
-      "f1": 0.4375,
+      "precision": 0.9309,
+      "recall": 0.9129,
+      "f1": 0.9218,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 30.85,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.8,
-      "precision": 1.0,
-      "recall": 0.28,
-      "f1": 0.4375,
+      "precision": 0.9432,
+      "recall": 0.8839,
+      "f1": 0.9126,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 29.85,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.85,
-      "precision": 1.0,
-      "recall": 0.24,
-      "f1": 0.3871,
+      "precision": 0.9484,
+      "recall": 0.8597,
+      "f1": 0.9019,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 29.25,
+      "machines_caught": 20,
       "machines_missed": 0
     },
     {
       "threshold": 0.9,
-      "precision": 1.0,
-      "recall": 0.14,
-      "f1": 0.2456,
+      "precision": 0.9656,
+      "recall": 0.8145,
+      "f1": 0.8836,
       "false_alarm_rate": 0.0,
-      "mean_lead_time": 49.0,
-      "machines_caught": 1,
+      "mean_lead_time": 26.4,
+      "machines_caught": 20,
       "machines_missed": 0
     }
   ],
@@ -232,19 +433,6 @@
     "test_only_evaluation": "PASS",
     "temporal_window_leakage": "NOT VERIFIABLE",
     "threshold_leakage": "PASS (Locked default or tuned on validation split)",
-    "scaler_split_leakage": "NOT VERIFIABLE (Scaler artifact metadata not exported)"
-  },
-  "per_machine": [
-    {
-      "machine_id": 3,
-      "actual_failure_cycle": 79.0,
-      "first_alert_cycle": 30.0,
-      "lead_time": 49.0,
-      "caught": true,
-      "false_alarm": false,
-      "max_risk": 0.9859912625386941,
-      "threshold": 0.5,
-      "status": "CAUGHT"
-    }
-  ]
+    "scaler_split_leakage": "PASS (Fitted on train statistics only per P3 script)"
+  }
 }

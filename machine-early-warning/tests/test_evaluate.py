@@ -17,6 +17,8 @@ from src.evaluate import (
     calculate_machine_false_alarm_rate,
     calculate_lead_time,
     calculate_threshold_sweep,
+    calculate_alert_deduplication,
+    calculate_cost_model,
     resolve_failure_cycles,
     run_leakage_audit,
     run_evaluation,
@@ -117,10 +119,23 @@ def test_validate_predictions_success(synthetic_predictions):
     assert "test" in info["splits"]
 
 
-def test_validate_predictions_missing_columns(synthetic_predictions):
-    df_missing = synthetic_predictions.drop(columns=["risk_baseline"])
+def test_validate_predictions_missing_core_columns(synthetic_predictions):
+    df_missing = synthetic_predictions.drop(columns=["machine_id"])
     with pytest.raises(ValueError, match="Missing required columns"):
         validate_predictions(df_missing)
+
+
+def test_validate_predictions_missing_risk_columns(synthetic_predictions):
+    df_no_risks = synthetic_predictions.drop(columns=["risk_baseline", "risk_lstm"])
+    with pytest.raises(ValueError, match="must contain at least one risk column"):
+        validate_predictions(df_no_risks)
+
+
+def test_validate_predictions_single_model_support(synthetic_predictions):
+    df_lstm_only = synthetic_predictions.drop(columns=["risk_baseline"])
+    info = validate_predictions(df_lstm_only)
+    assert info["has_lstm"] is True
+    assert info["has_baseline"] is False
 
 
 def test_validate_predictions_invalid_labels(synthetic_predictions):
@@ -173,6 +188,7 @@ def test_calculate_classification_metrics():
     assert metrics["recall"] == 1.0
     assert metrics["f1"] == 1.0
     assert metrics["pr_auc"] == 1.0
+    assert metrics["roc_auc"] == 1.0
     assert metrics["confusion_matrix"] == [[2, 0], [0, 2]]
 
 
@@ -244,7 +260,7 @@ def test_lead_time_calculation(synthetic_predictions):
 
 
 # ==============================================================================
-# 6. THRESHOLD SWEEP
+# 6. THRESHOLD SWEEP, DEDUPLICATION & COST MODEL
 # ==============================================================================
 
 def test_threshold_sweep(synthetic_predictions):
@@ -256,9 +272,24 @@ def test_threshold_sweep(synthetic_predictions):
         "threshold", "precision", "recall", "f1",
         "false_alarm_rate", "mean_lead_time", "machines_caught", "machines_missed"
     }
-    # At 0.90, neither failing machine crosses 0.90 -> 0 caught
     row_90 = sweep_df[sweep_df["threshold"] == 0.90].iloc[0]
     assert row_90["machines_caught"] == 0
+
+
+def test_alert_deduplication(synthetic_predictions):
+    test_df = synthetic_predictions[synthetic_predictions["split"] == "test"]
+    dedup = calculate_alert_deduplication(test_df, "risk_baseline", threshold=0.50, cooldown_cycles=10)
+    assert "alert_reduction_pct" in dedup
+    assert dedup["total_dedup_alerts"] <= dedup["total_raw_alerts"]
+
+
+def test_cost_model(synthetic_predictions):
+    test_df = synthetic_predictions[synthetic_predictions["split"] == "test"]
+    sweep_df = calculate_threshold_sweep(test_df, "risk_baseline", thresholds=[0.20, 0.50, 0.90])
+    cost_df, summary = calculate_cost_model(sweep_df)
+    assert "total_cost_inr" in cost_df.columns
+    assert "cost_optimal_threshold" in summary
+    assert summary["cost_optimal_threshold"] in [0.20, 0.50, 0.90]
 
 
 # ==============================================================================
@@ -274,7 +305,6 @@ def test_leakage_audit_clean(synthetic_predictions, tmp_path):
 
 
 def test_leakage_audit_machine_overlap(synthetic_predictions, tmp_path):
-    # Overlap machine 1 in both train and test
     bad_df = synthetic_predictions.copy()
     bad_df.loc[bad_df["machine_id"] == 1, "split"] = "train"
     bad_df_with_overlap = pd.concat([synthetic_predictions, bad_df.iloc[:5]], ignore_index=True)
@@ -312,8 +342,13 @@ def test_run_evaluation_end_to_end(synthetic_predictions, tmp_path):
     assert (out_dir / "figures" / "risk_trajectory.png").exists()
     assert (out_dir / "figures" / "feature_importance.png").exists()
     assert (out_dir / "figures" / "sensor_traces.png").exists()
+    assert (out_dir / "figures" / "cost_model.png").exists()
 
     # Verify JSON structure
     assert results["selected_threshold"] == 0.50
-    assert "baseline" in results["models"]
-    assert results["models"]["baseline"]["machines_caught"] == 1
+    assert results["threshold"] == 0.50
+    assert results["horizon"] == 30
+    assert "lstm" in results["models"]
+    assert "per_machine" in results
+    assert "alert_deduplication" in results
+    assert "cost_model" in results
