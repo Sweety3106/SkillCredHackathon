@@ -1,0 +1,5 @@
+numpy>=1.26
+pandas>=2.1
+pyarrow>=14.0
+tensorflow>=2.16,<2.20
+joblib>=1.3

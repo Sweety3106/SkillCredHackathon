@@ -1,0 +1,17 @@
+{
+  "model_path": "C:\\Users\\Lenovo\\SkillCredHackathon\\machine-early-warning\\models\\lstm.keras",
+  "scaler_path": "C:\\Users\\Lenovo\\SkillCredHackathon\\machine-early-warning\\models\\scaler.joblib",
+  "predictions_path": "C:\\Users\\Lenovo\\SkillCredHackathon\\machine-early-warning\\outputs\\predictions.parquet",
+  "train_windows": 11439,
+  "validation_windows": 2631,
+  "test_windows": 3661,
+  "train_machines": 64,
+  "validation_machines": 16,
+  "test_machines": 20,
+  "class_weights": {
+    "0": 0.6049180327868853,
+    "1": 2.8828125
+  },
+  "epochs_completed": 7,
+  "best_validation_pr_auc": 0.9761826992034912
+}
