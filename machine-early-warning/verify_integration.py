@@ -81,9 +81,15 @@ def verify_all():
     # 3. MODEL ARTIFACTS (IF-04) & PREDICTIONS CONTRACT (IF-05)
     # --------------------------------------------------------------------------
     print("\n[CHECKPOINT 3/6] Validating Model Artifacts & Predictions Contract (IF-04 & IF-05)...")
+    baseline_model_path = Path("models/baseline.joblib")
     lstm_model_path = Path("models/lstm.keras")
     scaler_path = Path("models/scaler.joblib")
     preds_path = Path("outputs/predictions.parquet")
+
+    if baseline_model_path.exists():
+        print(f"  [OK] IF-04 Model Artifact: baseline.joblib ({baseline_model_path.stat().st_size / 1024:.1f} KB)")
+    else:
+        errors.append("models/baseline.joblib is missing.")
 
     if not lstm_model_path.exists():
         errors.append("models/lstm.keras is missing.")
@@ -99,15 +105,17 @@ def verify_all():
         errors.append("outputs/predictions.parquet is missing.")
     else:
         preds = pd.read_parquet(preds_path)
-        required_cols = ["window_id", "machine_id", "window_end", "label", "split", "risk_lstm"]
+        required_cols = ["window_id", "machine_id", "window_end", "label", "split", "risk_baseline", "risk_lstm"]
         missing_cols = [c for c in required_cols if c not in preds.columns]
         if missing_cols:
             errors.append(f"predictions.parquet missing columns: {missing_cols}")
-        if preds["risk_lstm"].isnull().sum() > 0:
-            errors.append("risk_lstm contains null values")
-        if (preds["risk_lstm"] < 0.0).any() or (preds["risk_lstm"] > 1.0).any():
-            errors.append("risk_lstm values outside [0.0, 1.0]")
-        print(f"  [OK] IF-05 Predictions: {len(preds):,} rows, risk range [{preds['risk_lstm'].min():.4f}, {preds['risk_lstm'].max():.4f}], 0 nulls")
+        for col in ["risk_baseline", "risk_lstm"]:
+            if col in preds.columns:
+                if preds[col].isnull().sum() > 0:
+                    errors.append(f"{col} contains null values")
+                if (preds[col] < 0.0).any() or (preds[col] > 1.0).any():
+                    errors.append(f"{col} values outside [0.0, 1.0]")
+        print(f"  [OK] IF-05 Predictions: {len(preds):,} rows, risk_baseline [{preds['risk_baseline'].min():.4f}, {preds['risk_baseline'].max():.4f}], risk_lstm [{preds['risk_lstm'].min():.4f}, {preds['risk_lstm'].max():.4f}], 0 nulls")
 
     # --------------------------------------------------------------------------
     # 4. EVALUATION RESULTS & EXACT ICD SCHEMA (IF-08)

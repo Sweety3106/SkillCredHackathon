@@ -1,0 +1,18 @@
+{
+  "model": "HistGradientBoostingClassifier",
+  "dataset": "FD001",
+  "window_size": 30,
+  "feature_count": 147,
+  "train_machines": 64,
+  "validation_machines": 16,
+  "test_machines": 20,
+  "train_windows": 11439,
+  "validation_windows": 2631,
+  "test_windows": 3661,
+  "positive_windows_train": 1984,
+  "negative_windows_train": 9455,
+  "class_ratio_train": 4.77,
+  "sample_weight_strategy": "balanced class_weight",
+  "risk_min": 0.0007113070776212854,
+  "risk_max": 0.9990347500032173
+}

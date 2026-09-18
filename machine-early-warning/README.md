@@ -89,7 +89,44 @@ Evaluated on **3,661 held-out test windows across 20 unseen C-MAPSS engines** at
 
 ---
 
-## 4. Bonus Features (ICD Section 8)
+## 4. Head-to-Head Model Comparison (P2 Baseline vs. P3 LSTM)
+
+Evaluated side-by-side on the identical 3,661 test windows across 20 unseen C-MAPSS engines:
+
+| Model | Precision | Recall | F1 Score | ROC-AUC | PR-AUC | Machine FAR | Mean Lead Time | Engines Caught |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **BASELINE (HistGradientBoosting)** | **91.28%** | 91.13% | **0.9120** | 0.9929 | 0.9681 | **0.0%** | 31.35 cycles | **20 / 20 (100%)** |
+| **LSTM (Deep Sequence)** | 82.11% | **95.48%** | 0.8829 | **0.9946** | **0.9770** | **0.0%** | **35.95 cycles** | **20 / 20 (100%)** |
+
+### Key Takeaway for Judges:
+- **Baseline Advantage**: The tree-based baseline achieves higher overall precision (**91.28% vs 82.11%**) and F1 score (**0.9120**), training in seconds on CPU without GPU dependencies.
+- **LSTM Advantage**: The deep LSTM sequence model captures complex temporal dynamics earlier, providing **+4.60 additional cycles of early-warning runway** (35.95 vs 31.35 cycles) and higher recall (**95.48% vs 91.13%**).
+
+---
+
+## 5. Classical ML Baseline & Feature Engineering (P2 Contribution)
+
+### Feature Engineering (`src/features.py`)
+- **147 Engineered Features**: For each of the 21 sensors across the 30-cycle window, extracts 7 deterministic statistical indicators:
+  1. `mean`: Average sensor intensity over 30 cycles
+  2. `std`: Sensor noise and volatility
+  3. `min`: Extreme dip
+  4. `max`: Peak thermal/pressure stress
+  5. `slope`: Linear degradation rate $\left(\frac{\sum (t - \bar{t}) x_t}{\sum (t - \bar{t})^2}\right)$
+  6. `delta`: Net drift ($x_{29} - x_0$)
+  7. `last`: Most recent sensor reading ($x_{29}$)
+- **Vectorized Extraction**: Fully vectorized NumPy implementation processes 17,731 windows in under 0.3 seconds.
+- **Leakage Elimination**: `validate_no_target_leakage()` strictly verifies zero presence of RUL, failure flags, or future readings.
+
+### Baseline Model Training (`src/train_baseline.py`)
+- **Classifier**: `HistGradientBoostingClassifier(class_weight="balanced", random_state=42)`.
+- **Isolation**: Trained strictly on 64 training engines (11,439 windows), tuned on 16 validation engines (2,631 windows), evaluated on 20 held-out test engines (3,661 windows).
+- **Explainability**: Real permutation feature importances saved to `outputs/metrics/feature_importance.csv` and `outputs/feature_importance.json`.
+- **Safe Predictions Merging**: Merges `risk_baseline` into `outputs/predictions.parquet` on `window_id`, safely preserving P3's `risk_lstm`.
+
+---
+
+## 6. Bonus Features (ICD Section 8)
 
 ### Bonus Feature 1: Alert Deduplication
 - **Problem**: In raw sliding windows, an engine in degradation triggers alerts on dozens of successive cycles (average **36.0 alerts per engine**), causing technician alarm fatigue.
@@ -104,21 +141,24 @@ Evaluated on **3,661 held-out test windows across 20 unseen C-MAPSS engines** at
 
 ---
 
-## 5. Generated Artifacts & Visualizations
+## 7. Generated Artifacts & Visualizations
 
 All artifacts are persisted under `outputs/`:
 
 ```
 outputs/
 ├── metrics.json                         # Primary report matching ICD IF-08 exactly
+├── feature_importance.json              # Top sensor drivers for dashboard & API
 ├── metrics/
 │   ├── metrics.json                     # Mirror metrics JSON
 │   ├── per_machine_metrics.csv          # Machine-by-machine lead times, alert cycles, and status
 │   ├── threshold_sweep.csv              # 17-point threshold sensitivity table
-│   └── model_comparison.csv             # Head-to-head model comparison
+│   ├── model_comparison.csv             # Head-to-head model comparison
+│   └── feature_importance.csv           # Permutation feature importances
 └── figures/
-    ├── confusion_matrix_lstm.png        # Confusion matrix with cell counts and percentages
-    ├── pr_curve.png                     # Precision-Recall curve with PR-AUC = 0.977
+    ├── confusion_matrix_baseline.png    # Baseline confusion matrix
+    ├── confusion_matrix_lstm.png        # LSTM confusion matrix
+    ├── pr_curve.png                     # Precision-Recall curve with both models
     ├── threshold_sweep.png              # Precision, Recall, FAR vs Lead Time multi-panel plot
     ├── risk_trajectory.png              # Single-asset timeline (ALERT, FAILURE, shaded runway)
     ├── sensor_traces.png                # Top degradation sensor signals (Sensors 11, 9, 12, 14)
@@ -128,7 +168,7 @@ outputs/
 
 ---
 
-## 6. How to Run the Pipeline
+## 8. How to Run the Pipeline
 
 ### 1. Prerequisites
 ```bash
@@ -138,9 +178,12 @@ pip install pytest
 
 ### 2. Run Data Processing & Training
 ```bash
-python -m src.data_load
-python -m src.windowing
-python -m src.train_lstm
+python -m src.data_load          # P1: Load C-MAPSS data
+python -m src.windowing          # P1: Build 30-cycle sliding windows
+python -m src.features           # P2: Extract 147 statistical features
+python -m src.train_baseline     # P2: Train HistGradientBoosting baseline
+python -m src.train_lstm         # P3: Train LSTM sequence model
+```
 ```
 
 ### 3. Run Evaluation Pipeline (P4)
