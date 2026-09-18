@@ -1192,6 +1192,7 @@ def sanitize_for_json(obj: Any) -> Any:
 def run_evaluation(
     predictions_path: Union[str, Path],
     output_dir: Union[str, Path] = "outputs",
+    figures_dir: Optional[Union[str, Path]] = None,
     threshold: float = 0.50,
     dataset_name: str = "FD001",
     window_size: int = 30,
@@ -1203,9 +1204,19 @@ def run_evaluation(
     Execute full P4 evaluation pipeline deterministically.
     """
     out_dir = Path(output_dir)
-    figures_dir = out_dir / "figures"
-    metrics_dir = out_dir / "metrics"
+    if out_dir.name == "metrics":
+        metrics_dir = out_dir
+        root_out = out_dir.parent
+    else:
+        metrics_dir = out_dir / "metrics"
+        root_out = out_dir
 
+    if figures_dir is not None:
+        fig_dir = Path(figures_dir)
+    else:
+        fig_dir = root_out / "figures"
+
+    figures_dir = fig_dir
     figures_dir.mkdir(parents=True, exist_ok=True)
     metrics_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1422,7 +1433,7 @@ def run_evaluation(
 
     clean_metrics = sanitize_for_json(final_metrics)
 
-    metrics_json_root = out_dir / "metrics.json"
+    metrics_json_root = root_out / "metrics.json"
     metrics_json_nested = metrics_dir / "metrics.json"
 
     with open(metrics_json_root, "w") as f:
@@ -1476,6 +1487,12 @@ def main():
         help="Root output directory (default: outputs)",
     )
     parser.add_argument(
+        "--figures-dir",
+        type=str,
+        default=None,
+        help="Directory to save figures (default: <output-dir>/figures)",
+    )
+    parser.add_argument(
         "--require-lstm",
         action="store_true",
         help="Fail if LSTM predictions are missing",
@@ -1510,6 +1527,7 @@ def main():
         run_evaluation(
             predictions_path=pred_path,
             output_dir=args.output_dir,
+            figures_dir=args.figures_dir,
             threshold=args.threshold,
             dataset_name=args.dataset,
             require_lstm=args.require_lstm,
